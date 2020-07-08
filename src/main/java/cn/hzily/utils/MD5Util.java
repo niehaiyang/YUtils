@@ -36,7 +36,7 @@ public class MD5Util {
                 str[k++] = hexDigist[b >>> 4 & 0xf];//高4位
                 str[k++] = hexDigist[b & 0xf];//低4位
             }
-            string = new String(str);
+            string = new String(str).toUpperCase();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
