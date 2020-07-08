@@ -12,6 +12,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * http工具类，发送http请求
+ */
 public class HttpUtil {
 
     /**

@@ -8,6 +8,9 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * md5工具类
+ */
 public class MD5Util {
     private static MessageDigest MD5 = null;
 
@@ -19,6 +22,12 @@ public class MD5Util {
         }
     }
 
+    /**
+     * 获取md5
+     *
+     * @param buffer
+     * @return
+     */
     public static String md5(String buffer) {
         String string = null;
         char[] hexDigist = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
