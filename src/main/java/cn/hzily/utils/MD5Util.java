@@ -28,7 +28,7 @@ public class MD5Util {
      * @param buffer
      * @return
      */
-    public static String md5(String buffer) {
+    public static String encode(String buffer) {
         String string = null;
         char[] hexDigist = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
         MessageDigest md;
@@ -58,7 +58,7 @@ public class MD5Util {
      * @param file
      * @return
      */
-    public static String fileMD5(File file) {
+    public static String getFileMD5(File file) {
         FileInputStream fileInputStream = null;
         try {
             fileInputStream = new FileInputStream(file);

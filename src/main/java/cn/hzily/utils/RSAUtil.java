@@ -1,6 +1,5 @@
 package cn.hzily.utils;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
@@ -105,14 +104,14 @@ public class RSAUtil {
      * @throws Exception
      */
     public static String sign(byte[] data, String privateKey) throws Exception {
-        byte[] keyBytes = Base64.decode(privateKey);
+        byte[] keyBytes = Base64Util.decode(privateKey);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         PrivateKey privateK = keyFactory.generatePrivate(pkcs8KeySpec);
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
         signature.initSign(privateK);
         signature.update(data);
-        return Base64.encode(signature.sign());
+        return Base64Util.encode(signature.sign());
     }
 
     /** */
@@ -131,14 +130,14 @@ public class RSAUtil {
      */
     public static boolean verify(byte[] data, String publicKey, String sign)
             throws Exception {
-        byte[] keyBytes = Base64.decode(publicKey);
+        byte[] keyBytes = Base64Util.decode(publicKey);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         PublicKey publicK = keyFactory.generatePublic(keySpec);
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
         signature.initVerify(publicK);
         signature.update(data);
-        return signature.verify(Base64.decode(sign));
+        return signature.verify(Base64Util.decode(sign));
     }
 
     /** */
@@ -154,7 +153,7 @@ public class RSAUtil {
      */
     public static byte[] decryptByPrivateKey(byte[] encryptedData, String privateKey)
             throws Exception {
-        byte[] keyBytes = Base64.decode(privateKey);
+        byte[] keyBytes = Base64Util.decode(privateKey);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
@@ -194,7 +193,7 @@ public class RSAUtil {
      */
     public static byte[] decryptByPublicKey(byte[] encryptedData, String publicKey)
             throws Exception {
-        byte[] keyBytes = Base64.decode(publicKey);
+        byte[] keyBytes = Base64Util.decode(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         Key publicK = keyFactory.generatePublic(x509KeySpec);
@@ -234,7 +233,7 @@ public class RSAUtil {
      */
     public static byte[] encryptByPublicKey(byte[] data, String publicKey)
             throws Exception {
-        byte[] keyBytes = Base64.decode(publicKey);
+        byte[] keyBytes = Base64Util.decode(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         Key publicK = keyFactory.generatePublic(x509KeySpec);
@@ -275,7 +274,7 @@ public class RSAUtil {
      */
     public static byte[] encryptByPrivateKey(byte[] data, String privateKey)
             throws Exception {
-        byte[] keyBytes = Base64.decode(privateKey);
+        byte[] keyBytes = Base64Util.decode(privateKey);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
@@ -315,7 +314,7 @@ public class RSAUtil {
     public static String getPrivateKey(Map<String, Object> keyMap)
             throws Exception {
         Key key = (Key) keyMap.get(PRIVATE_KEY);
-        return Base64.encode(key.getEncoded());
+        return Base64Util.encode(key.getEncoded());
     }
 
     /** */
@@ -331,7 +330,7 @@ public class RSAUtil {
     public static String getPublicKey(Map<String, Object> keyMap)
             throws Exception {
         Key key = (Key) keyMap.get(PUBLIC_KEY);
-        return Base64.encode(key.getEncoded());
+        return Base64Util.encode(key.getEncoded());
     }
 
 }
