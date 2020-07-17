@@ -9,6 +9,7 @@ import java.util.Date;
 public class DateUtil {
     /**
      * 获取日期 yyyy-MM-dd HH:mm:ss
+     *
      * @return
      */
     public static String getDateTime() {
@@ -17,6 +18,7 @@ public class DateUtil {
 
     /**
      * 获取日期 yyyy-MM-dd
+     *
      * @return
      */
     public static String getDate() {
