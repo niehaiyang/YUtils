@@ -1,7 +1,6 @@
 package cn.hzily.utils;
 
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -55,19 +54,23 @@ public class MD5Util {
     /**
      * 获取文件的md5
      *
-     * @param file
+     * @param filePath
      * @return
      */
-    public static String getFileMD5(File file) {
+    public static String getFileMD5(String filePath) {
         FileInputStream fileInputStream = null;
         try {
-            fileInputStream = new FileInputStream(file);
+            fileInputStream = new FileInputStream(filePath);
             byte[] buffer = new byte[8192];
             int length;
             while ((length = fileInputStream.read(buffer)) != -1) {
                 MD5.update(buffer, 0, length);
             }
-            return new BigInteger(1, MD5.digest()).toString(16);
+            String md5Str = new BigInteger(1, MD5.digest()).toString(16);
+            if (md5Str.length() == 31) {
+                md5Str = "0" + md5Str;
+            }
+            return md5Str;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -80,5 +83,4 @@ public class MD5Util {
             }
         }
     }
-
 }
