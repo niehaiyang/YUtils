@@ -1,5 +1,6 @@
 package cn.hzily.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedOutputStream;
@@ -7,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -17,11 +19,41 @@ import java.util.Map;
  */
 public class HttpUtil {
 
+    public static void main(String[] args) {
+        String url = "http://127.0.0.1:8000/api/anime/add";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("originalFileName", "1");
+        jsonObject.put("encryptedFileName", "2");
+        jsonObject.put("unzipPassword", "3");
+        jsonObject.put("fileMD5Value", "4");
+        jsonObject.put("sign", "1234");
+        System.out.println(jsonObject);
+
+        System.out.println(jsonForPost(url, jsonObject));
+    }
+
+    /**
+     * 传入需要连接的IP，返回是否连接成功
+     *
+     * @param remoteInetAddr
+     * @return
+     */
+    public static boolean isReachable(String remoteInetAddr) {
+        boolean reachable;
+        try {
+            InetAddress address = InetAddress.getByName(remoteInetAddr);
+            reachable = address.isReachable(5000);
+        } catch (Exception e) {
+            return false;
+        }
+        return reachable;
+    }
+
     /**
      * Post方法发送form表单
      */
     public static String formForPost(String uri, Map<String, Object> params) {
-        String resMsg = "";
+        String resMsg = null;
         try {
             URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -55,7 +87,7 @@ public class HttpUtil {
             connection.disconnect();
             resMsg = result.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
         return resMsg;
     }
@@ -91,7 +123,6 @@ public class HttpUtil {
             connection.disconnect();
             return result.toString();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
